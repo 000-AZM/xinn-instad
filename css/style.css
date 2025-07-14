@@ -121,3 +121,34 @@ button {
   margin: 0 auto 15px auto;
 }
 
+/* Material Design-style Navbar */
+.md-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2196f3;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.md-navbar .brand {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.md-navbar .md-nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  font-size: 18px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.md-navbar .md-nav-links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
