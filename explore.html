@@ -1,0 +1,39 @@
+<!-- explore.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Xinn Lab – Explore</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>Explore Users</h1>
+
+  <input id="search" placeholder="Search email..." />
+  <div id="results"></div>
+
+  <script type="module">
+    import { db } from './js/firebase.js';
+    import { query, where, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+    document.getElementById('search').oninput = async (e) => {
+      const val = e.target.value.trim();
+      const results = document.getElementById('results');
+      results.innerHTML = '';
+
+      if (!val) return;
+
+      const q = query(collection(db, 'users'), where('email', '>=', val));
+      const snap = await getDocs(q);
+
+      snap.forEach(doc => {
+        const user = doc.data();
+        const div = document.createElement('div');
+        div.className = 'post';
+        div.textContent = user.email;
+        results.appendChild(div);
+      });
+    };
+  </script>
+</body>
+</html>
