@@ -1,29 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Xinn Lab – Chat</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <nav class="md-navbar">
-    <div class="brand">Xinn Lab</div>
-    <div class="md-nav-links">
-      <a href="home.html">🏠</a>
-      <a href="explore.html">🔍</a>
-      <a href="profile.html">👤</a>
-      <a href="chat.html">💬</a>
-      <a href="settings.html">⚙️</a>
-    </div>
-  </nav>
+import { supabase } from './supabase.js';
 
-  <div class="container">
-    <h2>💬 Direct Chat</h2>
-    <div id="chat-box" class="chat-box"></div>
-    <input id="message" type="text" placeholder="Type a message..." />
-    <button id="send">Send</button>
-  </div>
+const chatBox = document.getElementById('chat-box');
+const msgInput = document.getElementById('message');
+const sendBtn = document.getElementById('send');
 
-  <script type="module" src="js/chat.js"></script>
-</body>
-</html>
+let currentUser;
+
+(async () => {
+  const { data: authData } = await supabase.auth.getUser();
+  currentUser = authData?.user;
+  if (!currentUser) location.href = 'index.html';
+
+  loadMessages();
+  listenToMessages();
+})();
+
+async function loadMessages() {
+  const { data } = await supabase
+    .from('messages')
+    .select('*')
+    .order('created_at');
+
+  chatBox.innerHTML = '';
+  data.forEach(msg => {
+    const div = document.createElement('div');
+    div.className = msg.sender === currentUser.id ? 'msg self' : 'msg';
+    div.textContent = msg.text;
+    chatBox.appendChild(div);
+  });
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+sendBtn.onclick = async () => {
+  const text = msgInput.value.trim();
+  if (!text) return;
+
+  await supabase.from('messages').insert({
+    sender: currentUser.id,
+    text
+  });
+
+  msgInput.value = '';
+};
+
+function listenToMessages() {
+  supabase
+    .channel('public:messages')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, loadMessages)
+    .subscribe();
+}
