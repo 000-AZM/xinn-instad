@@ -23,7 +23,7 @@ document.getElementById('btn-register')?.addEventListener('click', async () => {
     avatar_url: ''
   });
 
-  location = 'home.html';
+  location.href = 'home.html';
 });
 
 document.getElementById('btn-login')?.addEventListener('click', async () => {
@@ -32,5 +32,5 @@ document.getElementById('btn-login')?.addEventListener('click', async () => {
     password: password.value
   });
   if (error) return alert(error.message);
-  location = 'home.html';
+  location.href = 'home.html';
 });
