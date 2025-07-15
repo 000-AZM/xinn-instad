@@ -1,32 +1,32 @@
-<!-- home.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Xinn Lab – Feed</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-<nav class="md-navbar">
-  <div class="brand">Xinn Lab</div>
-  <div class="md-nav-links">
-    <a href="home.html">🏠</a>
-    <a href="explore.html">🔍</a>
-    <a href="profile.html">👤</a>
-    <a href="chat.html">💬</a>
-    <a href="settings.html">⚙️</a>
+  <nav class="md-navbar">
+    <div class="brand">Xinn Lab</div>
+    <div class="md-nav-links">
+      <a href="home.html">🏠</a>
+      <a href="explore.html">🔍</a>
+      <a href="profile.html">👤</a>
+      <a href="chat.html">💬</a>
+      <a href="settings.html">⚙️</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>📸 Post Something</h2>
+    <input id="imgfile" type="file" accept="image/*" />
+    <input id="caption" type="text" placeholder="Write a caption..." />
+    <button id="btn-post">Post</button>
+
+    <h3>📰 Latest Posts</h3>
+    <div id="feed" class="post-grid"></div>
   </div>
-</nav>
 
-  <h1>Welcome to Xinn Lab 📸</h1>
-
-  <input id="imgfile" type="file" accept="image/*" />
-  <input id="caption" type="text" placeholder="Write a caption..." />
-  <button id="btn-post">Post</button>
-
-  <div id="feed"></div>
-
-  <script type="module" src="js/post.js"></script>
   <script type="module" src="js/feed.js"></script>
 </body>
 </html>
