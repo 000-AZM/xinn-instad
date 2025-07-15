@@ -4,6 +4,15 @@ const imgInput = document.getElementById('imgfile');
 const captionInput = document.getElementById('caption');
 const postBtn = document.getElementById('btn-post');
 const feed = document.getElementById('feed');
+import { uploadPost } from './post.js';
+
+document.getElementById('btn-post').onclick = async () => {
+  const file = document.getElementById('imgfile').files[0];
+  const caption = document.getElementById('caption').value;
+  await uploadPost(file, caption);
+  document.getElementById('caption').value = '';
+  loadFeed(); // refresh feed
+};
 
 // Handle post upload
 postBtn.addEventListener('click', async () => {
