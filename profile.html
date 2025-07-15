@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="md-navbar">
     <div class="brand">Xinn Lab</div>
     <div class="md-nav-links">
@@ -28,35 +27,6 @@
     <div id="my-posts" class="post-grid"></div>
   </div>
 
-  <script type="module">
-    import { auth, db } from './js/firebase.js';
-    import { collection, query, where, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
-
-    auth.onAuthStateChanged(user => {
-      if (!user) return location = 'index.html';
-      document.getElementById('username').textContent = '@' + user.email.split('@')[0];
-      document.getElementById('email').textContent = user.email;
-
-      const q = query(collection(db, 'posts'), where('uid', '==', user.uid));
-      onSnapshot(q, snapshot => {
-        const container = document.getElementById('my-posts');
-        container.innerHTML = '';
-        snapshot.forEach(doc => {
-          const post = doc.data();
-          const div = document.createElement('div');
-          div.className = 'post';
-          div.innerHTML = `
-            <img src="${post.imgURL}" />
-            <p>${post.caption}</p>
-          `;
-          container.appendChild(div);
-        });
-      });
-    });
-
-    function editProfile() {
-      alert('Edit profile coming soon!');
-    }
-  </script>
+  <script type="module" src="js/profile.js"></script>
 </body>
 </html>
