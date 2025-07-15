@@ -1,21 +1,31 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Xinn Lab – Login / Register</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <nav class="md-navbar">
+    <div class="brand">Xinn Lab</div>
+    <div class="md-nav-links">
+      <a href="home.html">🏠</a>
+      <a href="explore.html">🔍</a>
+      <a href="profile.html">👤</a>
+      <a href="chat.html">💬</a>
+      <a href="settings.html">⚙️</a>
+    </div>
+  </nav>
+
   <div class="container">
-    <h2>Xinn Lab</h2>
+    <h2>Login / Register</h2>
     <input id="email" type="email" placeholder="Email (@xinn.lab only)" />
+    <input id="username" type="text" placeholder="Username (only for register)" />
     <input id="password" type="password" placeholder="Password" />
-    <button id="btn-login">Log In</button>
-    <button id="btn-register">Register</button>
+    <button id="btn-login">🔐 Log In</button>
+    <button id="btn-register">🆕 Register</button>
   </div>
 
   <script type="module" src="js/auth.js"></script>
 </body>
 </html>
-
