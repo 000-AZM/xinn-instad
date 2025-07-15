@@ -1,32 +1,36 @@
-// js/auth.js
-import { auth } from './firebase.js';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { supabase } from './supabase.js';
 
-document.getElementById('btn-register').onclick = async () => {
-  const email = document.getElementById('email').value.trim();
-  const pw = document.getElementById('password').value;
+const email = document.getElementById('email');
+const username = document.getElementById('username');
+const password = document.getElementById('password');
 
-  if (!email.endsWith('@xinn.lab')) {
-    alert("Only emails ending with @xinn.lab are allowed.");
-    return;
+document.getElementById('btn-register')?.addEventListener('click', async () => {
+  if (!email.value.endsWith('@xinn.lab')) {
+    return alert('Only @xinn.lab emails allowed');
   }
 
-  try {
-    await createUserWithEmailAndPassword(auth, email, pw);
-    location = 'home.html';
-  } catch (e) {
-    alert(e.message);
-  }
-};
+  const { data, error } = await supabase.auth.signUp({
+    email: email.value,
+    password: password.value,
+    options: { data: { username: username.value } }
+  });
 
-document.getElementById('btn-login').onclick = async () => {
-  const email = document.getElementById('email').value.trim();
-  const pw = document.getElementById('password').value;
+  if (error) return alert(error.message);
 
-  try {
-    await signInWithEmailAndPassword(auth, email, pw);
-    location = 'home.html';
-  } catch (e) {
-    alert(e.message);
-  }
-};
+  await supabase.from('users').insert({
+    email: email.value,
+    username: username.value,
+    avatar_url: ''
+  });
+
+  location = 'home.html';
+});
+
+document.getElementById('btn-login')?.addEventListener('click', async () => {
+  const { error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value
+  });
+  if (error) return alert(error.message);
+  location = 'home.html';
+});
